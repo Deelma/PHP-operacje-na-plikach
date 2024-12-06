@@ -39,7 +39,17 @@
 
 <?php
 
+if(isset($_POST)){
+    
+    $wpisanytekst = $_POST['tekst'];
+    
+    $uchwyt = fopen('notatki.txt', 'w');
 
+    fwrite($uchwyt, $wpisanytekst);
+
+    fclose($uchwyt);
+
+}
 
 
 ?>
