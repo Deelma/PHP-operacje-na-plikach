@@ -10,9 +10,14 @@
         font-family: Arial;
     }
 
-    textarea{
+    textarea, p{
         background-color: #ecc1fd79;
-        border: solid purple 2px;
+        border: solid purple 2px; 
+    }
+
+    p{
+        width: 20vw;
+        font-size: 4vh;
     }
 
     button{
@@ -30,26 +35,37 @@
 </head>
 <body>
     <form action="index.php" method="post">
-        <textarea name="tekst">Domyślna zawartość</textarea>
+        <?php
+            echo '<textarea name="tekst">';
+            
+            //! Zadanie 1
+            
+            if(isset($_POST['tekst'])){
+                
+                $wpisanytekst = $_POST['tekst'];
+                $uchwyt = fopen('notatki.txt', 'w');
+            
+                fwrite($uchwyt, $wpisanytekst);
+            
+                fclose($uchwyt);
+            
+            }  
+            
+            //! Zadanie 2
+
+            $odczyt = fopen('notatki.txt', 'r');
+            $wielkoscpliku = filesize('notatki.txt');
+            
+            echo fread($odczyt, $wielkoscpliku);
+            
+            fclose($odczyt);
+            
+            
+            echo '</textarea>';
+        ?>
         <br>
         <button type="submit">Prześlij</button>
     </form>    
 </body>
 </html>
 
-<?php
-
-if(isset($_POST)){
-    
-    $wpisanytekst = $_POST['tekst'];
-    
-    $uchwyt = fopen('notatki.txt', 'w');
-
-    fwrite($uchwyt, $wpisanytekst);
-
-    fclose($uchwyt);
-
-}
-
-
-?>
