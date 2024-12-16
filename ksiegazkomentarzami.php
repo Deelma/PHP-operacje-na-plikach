@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ksiega gosci</title>
+    <title>Ksiega final</title>
     <style>
 
     body{
         font-family: Arial;
     }
 
-    input{
+    input, textarea{
         background-color: #ecc1fd79;
         border: none;
         border-bottom: solid purple 2px; 
+        width: 20%;
     }
 
     p{
@@ -35,8 +36,10 @@
     </style>
 </head>
 <body>
-    <form action="ksiegagosci.php" method="post">
-        Wprowadź imię: <input type="text" name="imie">
+    <form action="ksiegazkomentarzami.php" method="post">
+        <input type="text" name="imie" placeholder="Wprowadź imię">
+        <br>
+        <textarea name="komentarz" placeholder="Dodaj komentarz"></textarea>
         <br>
         <button type="submit" name="Dodaj">Dodaj</button>
         <br>
@@ -48,12 +51,12 @@
 //! punkt a)
 
     if($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['imie'])){
-        $uchwyt = fopen('imiona.txt', 'a');
+        $uchwyt = fopen('goscie.txt', 'a');
 
-        $imie = $_POST['imie'] . "\n";
+        $gosc = "<strong>" . $_POST['imie'] . "</strong> |" . $_POST['komentarz'] . "|" . "\n";
+        
 
-
-        fwrite($uchwyt, $imie);
+        fwrite($uchwyt, $gosc);
 
         
         fclose($uchwyt);
@@ -61,6 +64,6 @@
         header("Location: " . $_SERVER['REQUEST_URI']); 
     }
 
-    echo implode("<br>", file('imiona.txt'));
+    echo implode("<br>", explode(" ", file('goscie.txt') . "<br>"));
 
 ?>
